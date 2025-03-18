@@ -1,0 +1,13 @@
+<ul class="govuk-list">
+    <li>Instances: <%= @instances %></li>
+</ul>
+
+<h2 class="govuk-heading-m">Preview of changes</h2>
+
+<div class="result-wrapper">
+  <% @results.each do |result| %>
+    <div class="result gem-c-govspeak">
+      <%= result %>
+    </div>
+  <% end %>
+</div>
