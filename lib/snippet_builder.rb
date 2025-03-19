@@ -28,8 +28,10 @@ class SnippetBuilder
 
       result = elements.map(&:to_s).join("\n")
 
+      # Discard the snippet if the embed has not already been included in a previous snippet
       next if is_already_included?(result)
 
+      # Record that the snippet has been included (to be used in `is_already_included`)
       @previous_parents << embed.parent
 
       result
@@ -49,6 +51,9 @@ class SnippetBuilder
   def get_parent(embed)
     parent = embed.parent
 
+    # If the embed is within a list item or a table, we want to ensure
+    # the containing list/table is preserved, so we can show the surrounding
+    # HTML
     if parent.name == "li"
       parent = parent.ancestors("ul")[0]
     end
@@ -57,6 +62,8 @@ class SnippetBuilder
       parent = parent.ancestors("table")[0]
     end
 
+    # If there is no previous element (for example, if the parent is contained within
+    # a div), we keep trying until the parent element has a previous element
     while parent.previous_element.nil?
       parent = parent.parent
     end
