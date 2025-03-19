@@ -2,12 +2,24 @@
     <li>Instances: <%= @instances %></li>
 </ul>
 
-<h2 class="govuk-heading-m">Preview of changes</h2>
-
-<div class="result-wrapper">
-  <% @results.each do |result| %>
-    <div class="result gem-c-govspeak">
-      <%= result %>
+<nav id="nav_1234" aria-label="Document navigation" class="gem-c-secondary-navigation">
+  <ul class="gem-c-secondary-navigation__list">
+    <li class="gem-c-secondary-navigation__list-item <% if @tab == "instances" %> gem-c-secondary-navigation__list-item--current <% end %>">
+      <a class="govuk-link govuk-link--no-visited-state gem-c-secondary-navigation__list-item-link" data-gtm="tab" <% if @tab == "instances" %>aria-current="page"<% end %> href="<%= request.path_info %>?path=<%= @path %>&tab=instances">Preview instances (<%= @instances %>)</a>
+    </li>
+    <li class="gem-c-secondary-navigation__list-item <% if @tab == "preview" %> gem-c-secondary-navigation__list-item--current <% end %>">
+      <a class="govuk-link govuk-link--no-visited-state gem-c-secondary-navigation__list-item-link" data-gtm="tab" <% if @tab == "preview" %>aria-current="page"<% end %> href="<%= request.path_info %>?path=<%= @path %>&tab=preview">Preview document</a>
+    </li>
+  </ul>
+</nav>
+<% if @tab == "instances" %>
+    <div class="result-wrapper">
+      <% @results.each do |result| %>
+        <div class="result gem-c-govspeak">
+          <%= result %>
+        </div>
+      <% end %>
     </div>
-  <% end %>
-</div>
+<% else %>
+  <iframe srcdoc="<%= CGI.escapeHTML @html %>" style="width:100%;height:80vh;"></iframe>
+<% end %>
