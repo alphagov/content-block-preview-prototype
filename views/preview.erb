@@ -21,5 +21,6 @@
       <% end %>
     </div>
 <% else %>
+  <div class="govuk-inset-text">Note: There's currently no styling here</div>
   <iframe srcdoc="<%= CGI.escapeHTML @html %>" style="width:100%;height:80vh;"></iframe>
 <% end %>
